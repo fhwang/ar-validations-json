@@ -1,0 +1,2 @@
+test/db/test.sqlite3
+test/log/*.log
