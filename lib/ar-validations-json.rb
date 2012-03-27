@@ -19,15 +19,10 @@ module ActiveRecord
       def to_json
         json_hash = Hash.new { |h,k| h[k] = {} }
         @ar_class.validators.each do |validator|
-          case validator
-          when ActiveModel::Validations::AcceptanceValidator
-            validator.attributes.each do |attr|
-              json_hash[attr.to_s]['acceptance'] = validator_hash(validator)
-            end
-          when ActiveRecord::Validations::AssociatedValidator
-            validator.attributes.each do |attr|
-              json_hash[attr.to_s]['associated'] = validator_hash(validator)
-            end
+          label =
+            validator.class.name.split(/::/).last.underscore.split(/_/).first
+          validator.attributes.each do |attr|
+            json_hash[attr.to_s][label] = validator_hash(validator)
           end
         end
         json_hash.to_json
