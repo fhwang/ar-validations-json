@@ -31,13 +31,23 @@ module ActiveRecord
       end
 
       def serializable?(validator)
-        !(validator.options[:in] && validator.options[:in].is_a?(Proc)) &&
-          !(validator.options[:with] && validator.options[:with].is_a?(Proc))
+        options_that_might_be_procs = {
+          :in => nil, :tokenizer => %r|/active_model/validations/length.rb$|,
+          :with => nil
+        }
+        !options_that_might_be_procs.any? { |option, whitelisted_source|
+          (opt_value = validator.options[option]) && opt_value.is_a?(Proc) &&
+           (whitelisted_source.nil? or
+            opt_value.source_location.first !~ whitelisted_source)
+        }
       end
 
       def validator_hash(validator)
         validator_hash = {}
-        options = %w(accept allow_blank allow_nil in on message with without)
+        options = %w(
+          accept allow_blank allow_nil in is on maximum message minimum
+          too_long too_short with without wrong_length
+        )
         options.each do |option|
           if validator.options.has_key?(option.to_sym)
             validator_hash[option] = validator.options[option.to_sym]
