@@ -31,12 +31,13 @@ module ActiveRecord
       end
 
       def serializable?(validator)
-        !(validator.options[:in] && validator.options[:in].is_a?(Proc))
+        !(validator.options[:in] && validator.options[:in].is_a?(Proc)) &&
+          !(validator.options[:with] && validator.options[:with].is_a?(Proc))
       end
 
       def validator_hash(validator)
         validator_hash = {}
-        options = %w(accept allow_blank allow_nil in on message)
+        options = %w(accept allow_blank allow_nil in on message with without)
         options.each do |option|
           if validator.options.has_key?(option.to_sym)
             validator_hash[option] = validator.options[option.to_sym]
