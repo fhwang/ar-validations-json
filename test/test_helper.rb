@@ -25,13 +25,13 @@ ActiveRecord::Base.establish_connection(
 )
 
 module TestHelpers
-  def build_subclass(&block)
-    @klass = Class.new(::ActiveRecord::Base)
-    @klass.instance_eval &block
+  def build_model(&block)
+    @model = Class.new(::ActiveRecord::Base)
+    @model.instance_eval &block
   end
 
   def assert_validations_json(expected)
-    assert_equal(expected, JSON.parse(@klass.validations_json))
+    assert_equal(expected, JSON.parse(@model.validations_json))
   end
 end
 

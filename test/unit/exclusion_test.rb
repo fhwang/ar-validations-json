@@ -2,7 +2,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '/../test_helper'))
 
 class ExclusionTest < Test::Unit::TestCase
   def test_in_array
-    build_subclass do
+    build_model do
       validates_exclusion_of :username, :in => %w(admin superuser)
     end
     assert_validations_json(
@@ -11,7 +11,7 @@ class ExclusionTest < Test::Unit::TestCase
   end
 
   def test_in_range
-    build_subclass do
+    build_model do
       validates_exclusion_of :age, :in => (1..17)
     end
     assert_validations_json(
@@ -24,7 +24,7 @@ class ExclusionTest < Test::Unit::TestCase
   def test_in_lambda
     # Using a lambda only became an option as of ActiveRecord 3.1
     unless ActiveRecord::VERSION::MINOR == 0
-      build_subclass do
+      build_model do
         validates_exclusion_of(
           :password, :in => lambda { |p| [p.username, p.first_name] }
         )
@@ -34,7 +34,7 @@ class ExclusionTest < Test::Unit::TestCase
   end
 
   def test_allow_blank
-    build_subclass do
+    build_model do
       validates_exclusion_of :age, :allow_blank => true, :in => (1..17)
     end
     assert_validations_json(
