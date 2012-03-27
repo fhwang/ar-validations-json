@@ -24,6 +24,10 @@ module ActiveRecord
             validator.attributes.each do |attr|
               json_hash[attr.to_s]['acceptance'] = validator_hash(validator)
             end
+          when ActiveRecord::Validations::AssociatedValidator
+            validator.attributes.each do |attr|
+              json_hash[attr.to_s]['associated'] = validator_hash(validator)
+            end
           end
         end
         json_hash.to_json

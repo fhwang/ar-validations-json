@@ -23,3 +23,16 @@ ActiveRecord::Base.logger = Logger.new(
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3', :database => 'test/db/test.sqlite3'
 )
+
+module TestHelpers
+  def build_subclass(&block)
+    @klass = Class.new(::ActiveRecord::Base)
+    @klass.instance_eval &block
+  end
+
+  def assert_validations_json(expected)
+    assert_equal(expected, JSON.parse(@klass.validations_json))
+  end
+end
+
+Test::Unit::TestCase.send(:include, TestHelpers)

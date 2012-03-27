@@ -1,15 +1,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '/../test_helper'))
 
 class AcceptanceTest < Test::Unit::TestCase
-  def build_subclass(&block)
-    @klass = Class.new(::ActiveRecord::Base)
-    @klass.instance_eval &block
-  end
-
-  def assert_validations_json(expected)
-    assert_equal(expected, JSON.parse(@klass.validations_json))
-  end
-
   def test_simple
     build_subclass do
       validates_acceptance_of :terms_of_service
