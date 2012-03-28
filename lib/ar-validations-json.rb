@@ -16,18 +16,16 @@ module ActiveRecord
         @ar_class = ar_class
       end
 
-      def to_json
-        json_hash = Hash.new { |h,k| h[k] = {} }
-        @ar_class.validators.each do |validator|
-          if serializable?(validator)
-            label = validator.class.name.split(/::/).last.
-                    underscore.split(/_/).first
-            validator.attributes.each do |attr|
-              json_hash[attr.to_s][label] = validator_hash(validator)
-            end
+      def default_to_skip?(validator, option)
+        case validator
+        when ActiveModel::Validations::NumericalityValidator
+          case option
+          when 'allow_nil'
+            validator.options[option.to_sym] == false
+          when 'only_integer'
+            validator.options[option.to_sym] == false
           end
         end
-        json_hash.to_json
       end
 
       def serializable?(validator)
@@ -42,15 +40,33 @@ module ActiveRecord
         }
       end
 
+      def to_json
+        json_hash = Hash.new { |h,k| h[k] = {} }
+        @ar_class.validators.each do |validator|
+          if serializable?(validator)
+            label = validator.class.name.split(/::/).last.
+                    underscore.split(/_/).first
+            validator.attributes.each do |attr|
+              json_hash[attr.to_s][label] = validator_hash(validator)
+            end
+          end
+        end
+        json_hash.to_json
+      end
+
       def validator_hash(validator)
         validator_hash = {}
         options = %w(
-          accept allow_blank allow_nil in is on maximum message minimum
-          too_long too_short with without wrong_length
+          accept allow_blank allow_nil greater_than greater_than_or_equal_to 
+          equal_to even in is on less_than less_than_or_equal_to maximum
+          message minimum odd only_integer too_long too_short with without
+          wrong_length
         )
         options.each do |option|
           if validator.options.has_key?(option.to_sym)
-            validator_hash[option] = validator.options[option.to_sym]
+            unless default_to_skip?(validator, option)
+              validator_hash[option] = validator.options[option.to_sym]
+            end
           end
         end
         validator_hash = true if validator_hash.empty?
