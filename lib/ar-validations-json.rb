@@ -57,9 +57,9 @@ module ActiveRecord
       def validator_hash(validator)
         validator_hash = {}
         options = %w(
-          accept allow_blank allow_nil greater_than greater_than_or_equal_to 
+          accept allow_blank allow_nil case_sensitive greater_than greater_than_or_equal_to 
           equal_to even in is less_than less_than_or_equal_to maximum message
-          minimum odd on only_integer too_long too_short with without
+          minimum odd on only_integer scope too_long too_short with without
           wrong_length
         )
         options.each do |option|
