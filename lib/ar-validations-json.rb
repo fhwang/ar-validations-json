@@ -56,13 +56,7 @@ module ActiveRecord
 
       def validator_hash(validator)
         validator_hash = {}
-        options = %w(
-          accept allow_blank allow_nil case_sensitive greater_than greater_than_or_equal_to 
-          equal_to even in is less_than less_than_or_equal_to maximum message
-          minimum odd on only_integer scope too_long too_short with without
-          wrong_length
-        )
-        options.each do |option|
+        validator_options_to_try_copying.each do |option|
           if validator.options.has_key?(option.to_sym)
             unless default_to_skip?(validator, option)
               validator_hash[option] = validator.options[option.to_sym]
@@ -71,6 +65,15 @@ module ActiveRecord
         end
         validator_hash = true if validator_hash.empty?
         validator_hash
+      end
+
+      def validator_options_to_try_copying
+        %w(
+          accept allow_blank allow_nil case_sensitive greater_than
+          greater_than_or_equal_to equal_to even in is less_than
+          less_than_or_equal_to maximum message minimum odd on only_integer
+          scope too_long too_short with without wrong_length
+        )
       end
     end
   end
