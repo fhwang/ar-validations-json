@@ -26,8 +26,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "ar-validations-json"
   gem.homepage = "http://github.com/fhwang/ar-validations-json"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Serializes ActiveRecord validations into JSON for use by rich-client apps.}
+  gem.description = %Q{Serializes ActiveRecord validations into JSON for use by rich-client apps.}
   gem.email = "sera@fhwang.net"
   gem.authors = ["Francis Hwang"]
   # dependencies defined in Gemfile
