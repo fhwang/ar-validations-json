@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Francis Hwang"]
   s.date = "2012-04-03"
-  s.description = "TODO: longer description of your gem"
+  s.description = "Serializes ActiveRecord validations into JSON for use by rich-client apps."
   s.email = "sera@fhwang.net"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
     "README.markdown",
     "Rakefile",
     "VERSION",
+    "ar-validations-json.gemspec",
     "lib/ar-validations-json.rb",
     "test/test_helper.rb",
     "test/unit/acceptance_test.rb",
@@ -40,7 +41,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.17"
-  s.summary = "TODO: one-line summary of your gem"
+  s.summary = "Serializes ActiveRecord validations into JSON for use by rich-client apps."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
