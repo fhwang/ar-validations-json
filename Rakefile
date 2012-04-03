@@ -20,3 +20,17 @@ end
 
 task :default => :all_tests
 
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.name = "ar-validations-json"
+  gem.homepage = "http://github.com/fhwang/ar-validations-json"
+  gem.license = "MIT"
+  gem.summary = %Q{TODO: one-line summary of your gem}
+  gem.description = %Q{TODO: longer description of your gem}
+  gem.email = "sera@fhwang.net"
+  gem.authors = ["Francis Hwang"]
+  # dependencies defined in Gemfile
+end
+Jeweler::RubygemsDotOrgTasks.new
+
